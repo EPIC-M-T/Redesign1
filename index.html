@@ -361,7 +361,7 @@
     new Swiper('.atmosphereSwiper', { slidesPerView: 'auto', spaceBetween: 20, loop: true, autoplay: { delay: 0, disableOnInteraction: false }, speed: 4000, freeMode: true });
 
     // Social Wall Swiper
-    const socialImages = ["https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8ed048139fdead671.jpg","https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b9d72f310d1698e56b.jpg","https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b83b3a58c3b91a4d3c.jpg","https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8518a4085f0836be1.jpg"];
+    const socialImages = ["https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8ed048139fdead671.jpg","https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b9d72f310d1698e56b.jpg","https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8aae4078b3cba111d.jpg","https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b83b3a58c3b91a4d3c.jpg","https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8518a4085f0836be1.jpg"];
     const socialWrap = document.getElementById('socialWallWrapper');
     socialImages.forEach(u => { const s = document.createElement('div'); s.className = 'swiper-slide w-72 md:w-80'; s.innerHTML = `<img src="${u}" class="w-full h-96 object-cover rounded-2xl shadow-2xl">`; socialWrap.appendChild(s); });
     new Swiper('.socialSwiper', { slidesPerView: 'auto', spaceBetween: 20, loop: true, autoplay: { delay: 0, disableOnInteraction: false }, speed: 3500, freeMode: true });
