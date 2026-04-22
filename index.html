@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+  <title>EPIC Models & Talent | Las Vegas Luxury</title>
+  <!-- Tailwind + Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet"/>
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Swiper -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <!-- Tippy.js (optional) -->
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <!-- Lottie Player -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.0/dist/lottie-player.js"></script>
+  
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#D4AF37",
+            "primary-container": "#d4af37",
+            "on-primary-container": "#000000",
+            "surface": "#131313",
+            "surface-container": "#201f1f",
+            "surface-container-lowest": "#0e0e0e",
+            "on-background": "#e5e2e1",
+            "on-surface": "#e5e2e1",
+          },
+          fontFamily: {
+            "cta": ["Inter"],
+            "label-caps": ["Inter"],
+            "headline-md": ["Noto Serif"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Noto Serif"],
+            "body-md": ["Inter"],
+            "headline-display": ["Noto Serif"]
+          },
+          fontSize: {
+            "cta": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "600"}],
+            "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "500"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em"}],
+            "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "headline-display": ["84px", {"lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    .glass-card { background: rgba(26, 26, 26, 0.4); backdrop-filter: blur(40px); border: 0.5px solid rgba(212, 175, 55, 0.2); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .reveal-scale { opacity: 0; transform: scale(0.95); transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal-scale.active { opacity: 1; transform: scale(1); }
+    header.scrolled { height: 64px; background: rgba(0, 0, 0, 0.9); border-bottom: 1px solid rgba(212, 175, 55, 0.25); }
+    .scroll-reveal-group > * { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
+    .scroll-reveal-group.active > * { opacity: 1; transform: translateY(0); }
+    .scroll-reveal-group.active > *:nth-child(2) { transition-delay: 0.2s; }
+    .scroll-reveal-group.active > *:nth-child(3) { transition-delay: 0.4s; }
+    .scroll-reveal-group.active > *:nth-child(4) { transition-delay: 0.6s; }
+    .scroll-reveal-group.active > *:nth-child(5) { transition-delay: 0.8s; }
+
+    /* Triple Reveal Styles */
+    .triple-scene { position: relative; width: 100%; max-width: 1300px; margin: 0 auto; height: 560px; display: flex; justify-content: center; align-items: center; }
+    .triple-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; gap: 20px; transition: transform 0.3s; }
+    .reveal-card { width: 320px; height: 500px; border-radius: 24px; background: #0e1117; border: 1px solid rgba(212,175,55,0.4); box-shadow: 0 30px 50px rgba(0,0,0,0.6); overflow: hidden; transition: all 0.5s cubic-bezier(0.34,1.2,0.64,1); opacity: 0; transform: scale(0.9) translateY(30px); pointer-events: none; backdrop-filter: blur(4px); flex-shrink: 0; }
+    .reveal-card.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+    .reveal-card.center { border: 2px solid #d4af37; box-shadow: 0 40px 70px rgba(0,0,0,0.7); transform: scale(1.02) translateY(-5px); z-index: 10; }
+    .reveal-card .card-media, .reveal-card .card-video { width: 100%; height: 100%; object-fit: cover; }
+    .stats-bio-content { padding: 1.5rem; height: 100%; background: linear-gradient(145deg, #0f131a, #080a0f); color: white; overflow-y: auto; }
+    .stats-bio-content h3 { font-family: 'Noto Serif', serif; font-size: 1.8rem; margin-bottom: 0.5rem; color: #d4af37; }
+    .specialties span, .strengths span { display: inline-block; background: rgba(212,175,55,0.2); padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; margin: 0.2rem 0.3rem; color: #d4af37; border: 0.5px solid rgba(212,175,55,0.3); }
+    .close-reveal-btn { position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%); background: #d4af37; color: black; border: none; border-radius: 40px; padding: 12px 32px; font-weight: bold; cursor: pointer; z-index: 30; opacity: 0; pointer-events: none; transition: 0.3s; letter-spacing: 1px; box-shadow: 0 4px 20px rgba(212,175,55,0.4); }
+    .close-reveal-btn.visible { opacity: 1; pointer-events: auto; }
+    .triple-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 90; opacity: 0; visibility: hidden; transition: 0.3s; }
+    .triple-overlay.active { opacity: 1; visibility: visible; }
+    .reveal-wrapper { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 200; width: 90%; max-width: 1200px; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+    .reveal-wrapper.active { opacity: 1; pointer-events: auto; }
+    .swipe-indicator { position: absolute; bottom: -80px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); padding: 8px 20px; border-radius: 40px; display: flex; gap: 12px; align-items: center; z-index: 35; opacity: 0; transition: opacity 0.3s; white-space: nowrap; font-size: 12px; color: #d4af37; border: 1px solid rgba(212,175,55,0.3); }
+    .swipe-indicator.visible { opacity: 1; }
+    .triple-container.mobile-scrollable { overflow-x: auto; scroll-snap-type: x mandatory; gap: 20px; padding: 0 calc(50% - 140px); cursor: grab; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; justify-content: flex-start; }
+    .triple-container.mobile-scrollable .reveal-card { scroll-snap-align: center; }
+    .triple-container.mobile-scrollable::-webkit-scrollbar { height: 4px; }
+    .triple-container.mobile-scrollable::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
+    .video-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; }
+    .video-modal.active { opacity: 1; visibility: visible; }
+    .swiper-button-next, .swiper-button-prev { color: #D4AF37 !important; }
+    .swiper-pagination-bullet-active { background: #D4AF37 !important; }
+    @media (max-width: 900px) { .reveal-card { width: 280px; height: 460px; } .triple-scene { height: 520px; } }
+    @media (max-width: 768px) { .reveal-card { width: 280px; height: 460px; } }
+  </style>
+</head>
+<body class="bg-[#050505] text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+
+<!-- Floating Header (original style) -->
+<header class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/40 backdrop-blur-2xl transition-all duration-500" id="main-header">
+  <div class="nav-inner flex justify-between items-center h-20 px-6 md:px-12 w-full mx-auto transition-all duration-500">
+    <div class="text-xl md:text-2xl font-light tracking-[0.3em] text-white uppercase">EPIC TALENT</div>
+    <nav class="hidden lg:flex items-center gap-10 font-serif tracking-[0.15em] uppercase text-xs md:text-sm">
+      <a class="text-[#D4AF37] relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[1px] after:bg-[#D4AF37]" href="#">Models</a>
+      <a class="text-neutral-400 hover:text-white transition" href="#">Influencers</a>
+      <a class="text-neutral-400 hover:text-white transition" href="#">Event Talent</a>
+      <a class="text-neutral-400 hover:text-white transition" href="#">Portfolio</a>
+      <a class="text-neutral-400 hover:text-white transition" href="#about-section">About</a>
+    </nav>
+    <div class="flex items-center gap-6">
+      <div class="hidden md:flex items-center gap-4 text-white">
+        <span class="material-symbols-outlined text-xl cursor-pointer hover:text-primary">search</span>
+        <span class="material-symbols-outlined text-xl cursor-pointer hover:text-primary">account_circle</span>
+      </div>
+      <button class="bg-primary-container text-on-primary-container px-6 py-2.5 font-cta text-cta uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all">Book Talent</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- 1. Fullscreen Cinematic Hero -->
+  <section class="relative h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black z-10"></div>
+      <img class="w-full h-full object-cover grayscale-[20%] brightness-75" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnRMhUBo1964jv06a4HycU9Oc7cVSAT0-GN02gF3uCRk0T9xUpj1Bp-NtscOQ5acQwM0rPRaSZPsITVa_GriiApCZToLpjJYTUXTxFYlRJb1Zd7ihVJWQF2m2MWa0Kmcw575UDz3x7a2r_y8h7WLX6aY8BlvpNvISkQkss4plaohCBDlaY4e3Cn8i557d794JYII85hBG_7zvnqaEwRtdalh9mXjYVuP8zHa5sSCfB6RyLR9jCKU3WktLFD6i0ow3P5oycdQHJ6pM" alt="Luxury model"/>
+    </div>
+    <div class="relative z-20 container mx-auto px-6 text-center">
+      <p class="font-label-caps text-primary tracking-[0.4em] mb-6 animate-pulse">PREMIUM AGENCY</p>
+      <h1 class="font-headline-display text-white text-4xl md:text-6xl lg:text-[84px] leading-tight mb-12 max-w-5xl mx-auto">BOOK THE FINEST <br/> <span class="italic font-light">LAS VEGAS</span> TALENT</h1>
+      <div class="flex flex-col md:flex-row gap-6 justify-center">
+        <button class="bg-primary text-black px-12 py-5 font-cta text-cta uppercase tracking-[0.2em] hover:bg-white transition-all shadow-xl shadow-primary/10">Book Talent Now</button>
+        <button class="border border-white/30 text-white backdrop-blur-md px-12 py-5 font-cta uppercase tracking-[0.2em] hover:bg-white/10 transition">Explore Portfolio</button>
+      </div>
+    </div>
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2">
+      <span class="font-label-caps text-[10px] text-neutral-500 tracking-[0.3em]">SCROLL</span>
+      <div class="w-[1px] h-12 bg-gradient-to-b from-primary/50 to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- 2. Premium Trust Strip -->
+  <section class="bg-black py-16 border-y border-white/5 overflow-hidden reveal">
+    <div class="container mx-auto px-6">
+      <p class="text-center font-label-caps text-neutral-600 mb-12 tracking-[0.3em]">PARTNERS & CLIENTS</p>
+      <div class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale transition-all duration-1000 hover:grayscale-0 hover:opacity-100">
+        <div class="font-headline-md text-white tracking-tighter text-2xl">ARIA</div>
+        <div class="font-headline-md text-white tracking-widest text-2xl">VOGUE</div>
+        <div class="font-headline-md text-white font-bold text-2xl">WYNN</div>
+        <div class="font-headline-md text-white tracking-tighter text-2xl italic">REVOLVE</div>
+        <div class="font-headline-md text-white text-2xl">COSMOPOLITAN</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. About Us Section -->
+  <section class="py-32 bg-[#050505] overflow-hidden" id="about-section">
+    <div class="max-w-[1440px] mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <div class="lg:col-span-5 reveal">
+          <span class="font-label-caps text-primary tracking-[0.4em] block mb-6">BEYOND THE SURFACE</span>
+          <h2 class="font-headline-lg text-white mb-10 leading-[1.1]">Where <span class="italic font-light">Luxury</span> Meets Precision</h2>
+          <div class="space-y-8 font-body-lg text-neutral-400 leading-relaxed max-w-xl">
+            <p>Founded on the principle that luxury requires meticulous curation, EPIC Models & Talent has emerged as the definitive bridge between elite brands and world-class presence in Las Vegas.</p>
+            <p class="text-white italic font-serif text-2xl leading-snug border-l-2 border-primary pl-8 py-2">"We don't just provide faces; we provide brand ambassadors who embody the soul of your vision."</p>
+            <p>Our philosophy is rooted in excellence. We manage a diverse, high-caliber roster that is vetted for professionalism, punctuality, and an aesthetic that commands attention.</p>
+          </div>
+          <div class="mt-12 flex gap-12 items-center">
+            <div><div class="text-3xl font-headline-md text-white mb-1">500+</div><div class="font-label-caps text-[10px] text-neutral-500 uppercase tracking-widest">Elite Talent</div></div>
+            <div class="h-10 w-[1px] bg-neutral-800"></div>
+            <div><div class="text-3xl font-headline-md text-white mb-1">15+</div><div class="font-label-caps text-[10px] text-neutral-500 uppercase tracking-widest">Years Experience</div></div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 relative">
+          <div class="grid grid-cols-2 gap-4 reveal-scale">
+            <div class="space-y-4 pt-12"><div class="aspect-[3/4] overflow-hidden"><img class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ50hvjCa2iFoll9FlCd_4KFIpoNBsmufSPGSbwo-jrOEtF7yf0SAUgpEJeV3dqFeJEy3QUANj4aLX5yBzHXPUJytqaktbKzeQQGSy8vB92JtPWV7v8nnVWacoMsRR1-UO1FycYN3XjUI6KalVzvfvljy5QB1jPzizrl8EAmX-SLXrFBf51hG6RmcxmNg9HJAkGcNaZWso6LGYfTUT3B7LgANiM1bKim4UdN7CxLndDQvbsbrFp5Sq3ZBZS9wHKRVVcr9f0rGZOYM"></div></div>
+            <div class="space-y-4"><div class="aspect-[4/5] overflow-hidden"><img class="w-full h-full object-cover grayscale hover:grayscale-0 transition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyNv_J1TaPZwrvWh3IIr0LS0d5eW8LBR_8aU1H8wS2Z01wMYdX557h4483gsy6IqE5u37up2pNKToN2JZfzbe0H6ipWUCEk2RMgE7-l7SZfEElaD8l3_CJOLepqrZ6F6D3JA73yccctem1_PXadv3-AgJn7hh7JRiJQqtRahlmNQonA9OAoVvpVqPExJn1Mau-ojnpyRNrcCxRjMjQP0gtv3J-VWJa-lEDtjyJB5FJU5kRdi4PQbzReneX_-coEaDiilQavoGmYC8"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Signature Service Categories -->
+  <section class="py-24 bg-[#050505] reveal">
+    <div class="max-w-[1440px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        <div class="max-w-2xl"><span class="font-label-caps text-primary tracking-[0.3em] block mb-4">OUR EXPERTISE</span><h2 class="font-headline-lg text-white">Curation of <span class="italic font-light">Elite Presence</span></h2></div>
+        <p class="font-body-lg text-neutral-400 max-w-sm border-l border-primary/30 pl-8">Delivering world-class talent tailored for Las Vegas.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-1 px-1 scroll-reveal-group">
+        <div class="group relative aspect-[3/4] overflow-hidden"><img class="w-full h-full object-cover transition group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyNv_J1TaPZwrvWh3IIr0LS0d5eW8LBR_8aU1H8wS2Z01wMYdX557h4483gsy6IqE5u37up2pNKToN2JZfzbe0H6ipWUCEk2RMgE7-l7SZfEElaD8l3_CJOLepqrZ6F6D3JA73yccctem1_PXadv3-AgJn7hh7JRiJQqtRahlmNQonA9OAoVvpVqPExJn1Mau-ojnpyRNrcCxRjMjQP0gtv3J-VWJa-lEDtjyJB5FJU5kRdi4PQbzReneX_-coEaDiilQavoGmYC8"><div class="absolute inset-0 bg-gradient-to-t from-black/80 p-8 flex flex-col justify-end"><h3 class="font-headline-md text-white">Models</h3><p class="text-primary">Runway & Editorial</p></div></div>
+        <div class="group relative aspect-[3/4] overflow-hidden"><img class="w-full h-full object-cover transition group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4DGUryBasp6dliJM7NsFAiZEVPTewbDv5QX0YFJu1_BK9-BGOR5kddDk8nnE-jisRM5mr1umuPnKC4u-UTBYjyDrXfE3BAih7EcX_WRQsZ9ggrHZ2anProYTtlKBAcrmWCPYBG01JbIJX-OUaDTYvady-Dt1v9ujIsR3rp8_8lVlRVttNnHkD09f660uVmKN7Hr1wAkVMxd2Z-pZNDckfYtZoLSmeP0nOLm3EL8InL1LHrIuOUAHlfWORzR9AoAUtNkOeUqkkKvU"><div class="absolute inset-0 bg-gradient-to-t from-black/80 p-8 flex flex-col justify-end"><h3 class="font-headline-md text-white">Influencers</h3><p class="text-primary">Digital Content</p></div></div>
+        <div class="group relative aspect-[3/4] overflow-hidden"><img class="w-full h-full object-cover transition group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH3eZAFYsQ83r3Ii3LHp1qN6K8KG7_T2fuwb3ifWSpKrjRcSV0pa_JRbdD_QsGuroLg3bx7MZFHele3A_0X4k9orNzJdAv92lNAC-O4Pzwm1Mqx8vIJ78CN0xGayigk1fk7J8s7M1W53wLFOadOQLvp8f9K-kjzEYgxtcT8yOIL1IzTN0vLbyASADDQduXBunp22djPSeF3Vv-N07qnNrupcWOrVOpoL2nnLhb12HK66tjkd-JihXAqRMxy67ZdYoYtP5017vrzeU"><div class="absolute inset-0 bg-gradient-to-t from-black/80 p-8 flex flex-col justify-end"><h3 class="font-headline-md text-white">Event Talent</h3><p class="text-primary">Luxury Hospitality</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 5. INTERACTIVE ELITE AMBASSADORS (Triple Reveal) ========= -->
+  <section id="talent" class="py-28 px-4 md:px-8 bg-gradient-to-b from-black via-[#0a0c0f] to-black relative z-10">
+    <div class="max-w-7xl mx-auto text-center mb-12">
+      <span class="text-primary tracking-widest text-sm font-semibold">THE ROSTER</span>
+      <h2 class="font-serif text-5xl md:text-7xl mt-2 text-white">Elite Ambassadors</h2>
+      <div class="w-24 h-0.5 bg-primary mx-auto mt-4"></div>
+      <div class="mt-4 text-primary/80 text-sm flex items-center justify-center gap-2 flex-wrap">
+        <span class="material-symbols-outlined text-base">touch_app</span>
+        <span>CLICK ANY MODEL — FULL BODY • VIDEO • BIO</span>
+      </div>
+    </div>
+    <div class="swiper talentSwiper !overflow-visible relative max-w-7xl mx-auto">
+      <div class="swiper-wrapper" id="talentSwiperWrapper"></div>
+      <div class="swiper-pagination !bottom-0"></div>
+      <div class="swiper-button-next !text-primary"></div>
+      <div class="swiper-button-prev !text-primary"></div>
+    </div>
+  </section>
+
+  <!-- Triple Reveal Overlay -->
+  <div class="reveal-wrapper" id="revealWrapper"><div id="dynamicTripleScene"></div></div>
+  <div class="triple-overlay" id="tripleOverlay"></div>
+
+  <!-- 6. Lifestyle Carousel (Immersive Atmosphere) original -->
+  <section class="py-0 overflow-hidden bg-black reveal-scale">
+    <div class="px-6 mb-12 flex justify-between items-end max-w-[1440px] mx-auto">
+      <div><span class="font-label-caps text-primary tracking-[0.4em] block mb-4 uppercase">The Atmosphere</span><h2 class="font-headline-lg text-white">Vegas <span class="italic font-light">Evolved</span></h2></div>
+      <div class="hidden md:flex gap-4"><button class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white/10" onclick="document.getElementById('lifestyle-scroll').scrollBy({left: -400, behavior: 'smooth'})"><span class="material-symbols-outlined">chevron_left</span></button><button class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white/10" onclick="document.getElementById('lifestyle-scroll').scrollBy({left: 400, behavior: 'smooth'})"><span class="material-symbols-outlined">chevron_right</span></button></div>
+    </div>
+    <div class="flex overflow-x-auto no-scrollbar gap-4 pb-12 cursor-grab px-6" id="lifestyle-scroll">
+      <div class="min-w-[70vw] md:min-w-[45vw] lg:min-w-[35vw] aspect-video relative group"><img class="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-90 transition duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5QL5tYXEM9xWthrvAqXE6Rm6h4ye-zbFaOhUTsaQOUcAoFlqp1kRpsqkC9YqcRsdTP-2mvLDOexV14iLYyDt-jwhzJ2pAuFYJQL1hKQLm1vIvtc76QZPcGpTw1CrYj2vJpScl-AVAb9zKLQvIFFa317EuXmiUUolnIqfh6ec9hhHFy5Z3sBFXy6OCthH-i1Zzq5A-RWfzDMHk953ycK-mBXCoIp0W8u4GaCRwaaTUWgrXJYgNS6Hwex-dMWIR8DiOtiHP0FQYZvw"><div class="absolute inset-0 bg-gradient-to-t from-black/80 p-8 flex flex-col justify-end"><p class="text-primary text-[10px] tracking-widest uppercase">The Nightlife</p><h4 class="font-headline-md text-white text-xl">Exclusive VIP Engagements</h4></div></div>
+      <div class="min-w-[70vw] md:min-w-[45vw] lg:min-w-[35vw] aspect-video relative group"><img class="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-90 transition duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ50hvjCa2iFoll9FlCd_4KFIpoNBsmufSPGSbwo-jrOEtF7yf0SAUgpEJeV3dqFeJEy3QUANj4aLX5yBzHXPUJytqaktbKzeQQGSy8vB92JtPWV7v8nnVWacoMsRR1-UO1FycYN3XjUI6KalVzvfvljy5QB1jPzizrl8EAmX-SLXrFBf51hG6RmcxmNg9HJAkGcNaZWso6LGYfTUT3B7LgANiM1bKim4UdN7CxLndDQvbsbrFp5Sq3ZBZS9wHKRVVcr9f0rGZOYM"><div class="absolute inset-0 bg-gradient-to-t from-black/80 p-8 flex flex-col justify-end"><p class="text-primary text-[10px] tracking-widest uppercase">Behind Scenes</p><h4 class="font-headline-md text-white text-xl">Cinematic Production Flow</h4></div></div>
+      <div class="min-w-[70vw] md:min-w-[45vw] lg:min-w-[35vw] aspect-video relative group"><img class="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-90 transition duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH3eZAFYsQ83r3Ii3LHp1qN6K8KG7_T2fuwb3ifWSpKrjRcSV0pa_JRbdD_QsGuroLg3bx7MZFHele3A_0X4k9orNzJdAv92lNAC-O4Pzwm1Mqx8vIJ78CN0xGayigk1fk7J8s7M1W53wLFOadOQLvp8f9K-kjzEYgxtcT8yOIL1IzTN0vLbyASADDQduXBunp22djPSeF3Vv-N07qnNrupcWOrVOpoL2nnLhb12HK66tjkd-JihXAqRMxy67ZdYoYtP5017vrzeU"><div class="absolute inset-0 bg-gradient-to-t from-black/80 p-8 flex flex-col justify-end"><p class="text-primary text-[10px] tracking-widest uppercase">Luxury Events</p><h4 class="font-headline-md text-white text-xl">High-Stakes Brand Activations</h4></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SOCIAL WALL LIFESTYLE CAROUSEL (auto-loop) ========= -->
+  <section class="py-20 overflow-hidden relative bg-[#050505]">
+    <div class="text-center mb-8 px-4">
+      <span class="text-primary text-sm tracking-widest">#EPICxVEGAS</span>
+      <h2 class="font-serif text-4xl md:text-5xl text-white mt-2">Lifestyle Carousel</h2>
+    </div>
+    <div class="swiper socialSwiper w-full">
+      <div class="swiper-wrapper" id="socialWallWrapper"></div>
+    </div>
+  </section>
+
+  <!-- 7. Why Clients Book EPIC -->
+  <section class="py-24 bg-surface-container reveal">
+    <div class="max-w-[1440px] mx-auto px-6 text-center">
+      <span class="font-label-caps text-primary tracking-[0.3em] block mb-4">THE GOLD STANDARD</span>
+      <h2 class="font-headline-lg text-white mb-20">The EPIC <span class="italic font-light">Edge</span></h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="glass-card p-12"><span class="material-symbols-outlined text-4xl text-primary mb-8">verified</span><h3 class="font-headline-md text-white mb-6">Absolute Reliability</h3><p class="text-neutral-400">Vetted for professionalism and punctuality in fast-paced Vegas.</p></div>
+        <div class="glass-card p-12 md:translate-y-8"><span class="material-symbols-outlined text-4xl text-primary mb-8">diamond</span><h3 class="font-headline-md text-white mb-6">Elite Aesthetic</h3><p class="text-neutral-400">Curated roster that defines modern beauty.</p></div>
+        <div class="glass-card p-12"><span class="material-symbols-outlined text-4xl text-primary mb-8">location_on</span><h3 class="font-headline-md text-white mb-6">Vegas Expertise</h3><p class="text-neutral-400">Unrivaled knowledge of venues and production.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Las Vegas Pulse -->
+  <section class="relative py-48 overflow-hidden reveal-scale">
+    <div class="absolute inset-0"><img class="w-full h-full object-cover opacity-50 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5QL5tYXEM9xWthrvAqXE6Rm6h4ye-zbFaOhUTsaQOUcAoFlqp1kRpsqkC9YqcRsdTP-2mvLDOexV14iLYyDt-jwhzJ2pAuFYJQL1hKQLm1vIvtc76QZPcGpTw1CrYj2vJpScl-AVAb9zKLQvIFFa317EuXmiUUolnIqfh6ec9hhHFy5Z3sBFXy6OCthH-i1Zzq5A-RWfzDMHk953ycK-mBXCoIp0W8u4GaCRwaaTUWgrXJYgNS6Hwex-dMWIR8DiOtiHP0FQYZvw"><div class="absolute inset-0 bg-black/60"></div></div>
+    <div class="relative z-10 container mx-auto px-6 text-center"><h2 class="font-headline-display text-white text-5xl md:text-7xl mb-8">The EPIC <span class="italic font-light">Pulse</span></h2><p class="font-body-lg text-primary max-w-2xl mx-auto tracking-[0.2em] uppercase">Vegas energy. World-class talent. Zero compromise.</p></div>
+  </section>
+
+  <!-- 9. Testimonials -->
+  <section class="py-24 bg-[#050505] reveal">
+    <div class="max-w-[1440px] mx-auto px-6 grid lg:grid-cols-2 gap-24 items-center">
+      <div><span class="font-label-caps text-primary tracking-[0.3em]">THE ELITE WORD</span><h2 class="font-headline-lg text-white mb-8">What our <span class="italic font-light">Distinguished Clients</span> say</h2><div class="h-[1px] w-24 bg-primary"></div></div>
+      <div class="relative"><span class="material-symbols-outlined text-9xl text-white/5 absolute -top-12 -left-12">format_quote</span><blockquote class="font-headline-md text-white text-2xl md:text-3xl italic">"EPIC provided talent that elevated the entire activation. Unmatched attention to detail."</blockquote><div class="mt-8 flex items-center gap-4"><div class="w-12 h-[1px] bg-neutral-700"></div><cite class="text-neutral-400 uppercase tracking-widest not-italic">VP Marketing, Luxury Resort Group</cite></div></div>
+    </div>
+  </section>
+
+  <!-- 10. Contact -->
+  <section class="py-32 bg-surface-container-lowest border-t border-white/5 relative overflow-hidden" id="contact-section">
+    <div class="max-w-[1440px] mx-auto px-6 grid lg:grid-cols-2 gap-24">
+      <div class="reveal"><span class="font-label-caps text-primary tracking-[0.4em]">GET IN TOUCH</span><h2 class="font-headline-lg text-white mb-10">Start Your <span class="italic font-light">Transformation</span></h2><div class="space-y-8"><p class="text-xl text-white font-serif">Las Vegas, NV</p><a class="text-2xl text-primary hover:text-white" href="mailto:booking@epicmodelsandtalent.com">booking@epicmodelsandtalent.com</a><div class="flex gap-8"><a class="text-neutral-400 hover:text-primary uppercase text-xs tracking-widest" href="#">Instagram</a><a class="text-neutral-400 hover:text-primary uppercase text-xs tracking-widest" href="#">LinkedIn</a></div></div></div>
+      <div class="reveal"><form class="glass-card p-8 md:p-12 space-y-8"><input class="w-full bg-transparent border-b border-white/10 py-3 focus:border-primary outline-none text-white" placeholder="Name"><input class="w-full bg-transparent border-b border-white/10 py-3 focus:border-primary outline-none text-white" placeholder="Email"><textarea class="w-full bg-transparent border-b border-white/10 py-3 focus:border-primary outline-none text-white" placeholder="Message" rows="3"></textarea><button class="w-full bg-primary text-black py-5 font-cta uppercase tracking-[0.3em] hover:bg-white transition">Send Inquiry</button></form></div>
+    </div>
+    <div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 -skew-x-12 translate-x-1/2 z-0"></div>
+  </section>
+
+  <!-- 11. Final CTA -->
+  <section class="relative py-48 bg-black overflow-hidden flex items-center justify-center reveal-scale">
+    <div class="absolute inset-0 bg-primary/5 opacity-40"></div>
+    <div class="relative z-20 text-center px-6"><h2 class="font-headline-display text-white text-5xl md:text-[84px] mb-12">Ready for the <span class="italic font-light">Spotlight?</span></h2><button class="bg-primary text-black px-20 py-8 font-cta text-xl uppercase tracking-[0.3em] hover:bg-white transition shadow-2xl">Book Talent Now</button></div>
+  </section>
+</main>
+
+<footer class="w-full py-16 px-8 border-t border-white/5 bg-[#050505]">
+  <div class="flex flex-col md:flex-row justify-between items-center gap-8 max-w-[1920px] mx-auto">
+    <div class="text-xl font-bold tracking-tighter text-white uppercase">EPIC TALENT AGENCY</div>
+    <div class="flex flex-wrap justify-center gap-10 text-[10px] uppercase text-neutral-500"><a class="hover:text-white" href="#">Terms</a><a class="hover:text-white" href="#">Privacy</a><a class="hover:text-white" href="#">Press</a><a class="text-primary" href="#contact-section">Contact</a></div>
+    <div class="text-[10px] uppercase text-neutral-500">© 2025 EPIC TALENT AGENCY</div>
+  </div>
+</footer>
+
+<!-- Video Modal -->
+<div id="videoModal" class="video-modal"><div class="relative w-11/12 max-w-4xl bg-black rounded-2xl"><video id="modalVideo" controls autoplay class="w-full max-h-[80vh]"></video><button id="closeVideo" class="absolute top-3 right-5 text-white text-3xl">&times;</button></div></div>
+
+<script>
+  (function(){
+    // Data models
+    const modelsData = [
+      { name: "Zoe", tagline: "Lifestyle & Brand Ambassador", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", bio: "Zoe is a lifestyle model and brand ambassador known for her polished look and strong on-camera presence.", specialties: ["Lifestyle", "Brand Activations"], strengths: ["Approachable","Photogenic"], insta: "@ZoeLizGordon" },
+      { name: "Valeria", tagline: "Lifestyle & Swimwear", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Valeria is a lifestyle and swimwear model known for her striking look and confident presence.", specialties: ["Swimwear","Dayclubs"], strengths: ["Confident","Engaging"], insta: "@ValeriaPuebela" },
+      { name: "Ki", tagline: "Fitness Ambassador", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a175ee05203568fc21.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dbe339e30902466cfe28.mp4", bio: "Ki is a fitness-focused model known for her athletic look and high-energy presence.", specialties: ["Fitness","Swimwear"], strengths: ["High energy"], insta: "@kithebody" },
+      { name: "Mica", tagline: "Glamour & Lifestyle", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b9063a85455ee7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a181b374defcadedba.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8fcf4f9a4b4c0e67ee.mp4", bio: "Micaela is a glamour model known for her elegant, high-impact presence.", specialties: ["Glamour","Luxury"], strengths: ["Elegant","Professional"], insta: "@Micaelabaguear" }
+    ];
+
+    // Populate Swiper
+    const wrapper = document.getElementById('talentSwiperWrapper');
+    modelsData.forEach((m,i) => {
+      const slide = document.createElement('div'); slide.className = 'swiper-slide';
+      slide.innerHTML = `<div class="flip-card cursor-pointer group" data-idx="${i}"><div class="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10"><img src="${m.headshot}" class="w-full h-full object-cover transition group-hover:scale-105"><div class="absolute inset-0 bg-gradient-to-t from-black/80 flex items-end p-6"><h3 class="font-serif text-2xl text-white">${m.name}</h3></div></div></div>`;
+      wrapper.appendChild(slide);
+    });
+    new Swiper('.talentSwiper', { slidesPerView: 1, spaceBetween: 24, loop: true, centeredSlides: true, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, pagination: { el: '.swiper-pagination', clickable: true }, breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } });
+
+    // Social wall
+    const socialImages = ["https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8ed048139fdead671.jpg","https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b9d72f310d1698e56b.jpg","https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b83b3a58c3b91a4d3c.jpg","https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b87dc8097a7521c274.jpg"];
+    const socialWrap = document.getElementById('socialWallWrapper');
+    socialImages.forEach(u => { const s = document.createElement('div'); s.className = 'swiper-slide w-80'; s.innerHTML = `<img src="${u}" class="w-80 h-96 object-cover rounded-2xl shadow-2xl">`; socialWrap.appendChild(s); });
+    new Swiper('.socialSwiper', { slidesPerView: 'auto', spaceBetween: 24, loop: true, autoplay: { delay: 0, disableOnInteraction: false }, speed: 3500, freeMode: true });
+
+    // Triple reveal logic
+    const overlay = document.getElementById('tripleOverlay'), revealWrap = document.getElementById('revealWrapper'), sceneDiv = document.getElementById('dynamicTripleScene');
+    let activeTriple = null;
+    function closeReveal() { if(activeTriple) { overlay.classList.remove('active'); revealWrap.classList.remove('active'); sceneDiv.innerHTML = ''; activeTriple = null; document.body.style.overflow = ''; } }
+    function openTripleReveal(idx) {
+      if(activeTriple) closeReveal();
+      const model = modelsData[idx]; const isMobile = window.innerWidth <= 768;
+      sceneDiv.innerHTML = `<div class="triple-scene"><div class="triple-container ${isMobile ? 'mobile-scrollable' : ''}" id="tripleContainer">
+        <div class="reveal-card left"><img class="card-media" src="${model.fullBody}"></div>
+        <div class="reveal-card right"><div class="stats-bio-content"><h3>${model.name}</h3><p class="text-sm text-primary">${model.tagline}</p><p>${model.bio}</p><div class="specialties">${model.specialties.map(s=>`<span>${s}</span>`).join('')}</div><div class="strengths">${model.strengths.map(s=>`<span>${s}</span>`).join('')}</div><p class="mt-4 text-xs text-primary">${model.insta}</p></div></div>
+        ${isMobile?'<div class="swipe-indicator"><span class="material-symbols-outlined">swipe</span> Swipe to explore</div>':''}
+      </div><button class="close-reveal-btn" id="closeRevealBtn">✕ CLOSE</button></div>`;
+      const container = document.getElementById('tripleContainer');
+      const centerCard = document.createElement('div'); centerCard.className = 'reveal-card center';
+      const vid = document.createElement('video'); vid.className = 'card-video'; vid.autoplay = true; vid.loop = true; vid.muted = true; vid.playsInline = true;
+      vid.innerHTML = `<source src="${model.videoUrl}" type="video/mp4">`;
+      vid.onerror = () => { centerCard.innerHTML = `<img class="card-media" src="${model.fullBody}">`; };
+      centerCard.appendChild(vid);
+      container.insertBefore(centerCard, container.querySelector('.right'));
+      overlay.classList.add('active'); revealWrap.classList.add('active'); document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        document.querySelectorAll('.reveal-card').forEach(c => c.classList.add('active'));
+        document.querySelector('.close-reveal-btn').classList.add('visible');
+        if(isMobile) { setTimeout(() => document.querySelector('.swipe-indicator')?.classList.add('visible'), 200); }
+        if(isMobile && container) { setTimeout(() => { const cr = centerCard.getBoundingClientRect(); container.scrollLeft = cr.left - container.getBoundingClientRect().left - (container.clientWidth/2) + (cr.width/2); }, 300); }
+      }, 50);
+      activeTriple = sceneDiv;
+      document.getElementById('closeRevealBtn').addEventListener('click', closeReveal);
+    }
+    document.addEventListener('click', e => { const card = e.target.closest('.flip-card'); if(card) { const idx = card.dataset.idx; if(idx !== undefined) openTripleReveal(parseInt(idx)); } });
+    overlay.addEventListener('click', closeReveal);
+
+    // Video modal
+    const modal = document.getElementById('videoModal'), modalVid = document.getElementById('modalVideo');
+    document.querySelectorAll('.reel-thumb').forEach(t => t.addEventListener('click', () => { modalVid.src = t.dataset.video; modal.classList.add('active'); modalVid.play(); }));
+    document.getElementById('closeVideo').addEventListener('click', () => { modal.classList.remove('active'); modalVid.pause(); modalVid.src=''; });
+
+    // Scroll & header
+    gsap.registerPlugin(ScrollTrigger);
+    const observer = new IntersectionObserver((e) => e.forEach(en => { if(en.isIntersecting) en.target.classList.add('active'); }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal, .reveal-scale, .scroll-reveal-group').forEach(el => observer.observe(el));
+    window.addEventListener('scroll', () => document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 100));
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); }));
+    document.getElementById('lifestyle-scroll')?.addEventListener('wheel', (e) => { e.preventDefault(); e.currentTarget.scrollLeft += e.deltaY; });
+  })();
+</script>
+</body>
+</html>
