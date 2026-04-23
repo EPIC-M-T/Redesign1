@@ -189,6 +189,49 @@
       align-items: center;
       gap: 4px;
       border: 0.5px solid rgba(212,175,55,0.5);
+      pointer-events: none;
+    }
+
+    /* Lightbox */
+    #lightbox {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(12px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+    #lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    #lightbox img {
+      max-width: 90%;
+      max-height: 85vh;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+    #lightbox .close-lightbox {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #D4AF37;
+      font-size: 42px;
+      cursor: pointer;
+      background: rgba(0,0,0,0.5);
+      width: 50px;
+      height: 50px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
     }
   </style>
 </head>
@@ -197,7 +240,6 @@
 <!-- Floating Header with EPIC Logo (slightly enlarged) -->
 <header class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/40 backdrop-blur-2xl transition-all duration-500" id="main-header">
   <div class="nav-inner flex justify-between items-center h-20 px-4 md:px-8 w-full mx-auto transition-all duration-500">
-    <!-- Slightly enlarged logo: h-10 md:h-12 -->
     <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687edb257f24c671f43bb1cb.png" alt="EPIC Models" class="h-10 md:h-12 w-auto object-contain">
     <nav class="hidden lg:flex items-center gap-8 font-serif tracking-[0.15em] uppercase text-xs md:text-sm">
       <a class="text-[#D4AF37] relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[1px] after:bg-[#D4AF37]" href="#">Models</a>
@@ -218,6 +260,12 @@
 
 <!-- Back to Top Button -->
 <div id="backToTop" class="material-symbols-outlined">arrow_upward</div>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="this.classList.remove('active')">
+  <span class="close-lightbox" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</span>
+  <img id="lightbox-img" src="" alt="Expanded view">
+</div>
 
 <main class="relative">
   <!-- 1. Fullscreen Cinematic Hero -->
@@ -292,7 +340,7 @@
     </div>
   </section>
 
-  <!-- 5. INTERACTIVE ELITE AMBASSADORS (Triple Reveal) -->
+  <!-- 5. INTERACTIVE ELITE AMBASSADORS (6 models) -->
   <section id="talent" class="py-20 md:py-28 px-4 bg-gradient-to-b from-black via-[#0a0c0f] to-black relative z-10">
     <div class="max-w-7xl mx-auto text-center mb-8 md:mb-12">
       <span class="text-primary tracking-widest text-sm font-semibold">THE ROSTER</span>
@@ -350,19 +398,7 @@
     </div>
   </section>
 
-  <!-- 9. THE EPIC PULSE → INFINITE SCROLL VIDEO/IMAGE GALLERY -->
-  <section class="py-20 md:py-28 bg-black relative overflow-hidden" id="epic-pulse-gallery">
-    <div class="max-w-7xl mx-auto px-4 mb-12 text-center md:text-left">
-      <span class="font-label-caps text-primary tracking-[0.4em]">THE EPIC PULSE</span>
-      <h2 class="font-headline-lg text-white mt-2">Past · Present · <span class="italic font-light">Future</span></h2>
-      <p class="text-neutral-400 max-w-2xl mt-4">A living archive of our talent in motion. Scroll infinitely.</p>
-    </div>
-    <!-- Gallery grid with infinite scroll -->
-    <div id="infiniteGallery" class="gallery-grid px-4 md:px-6 max-w-[1600px] mx-auto"></div>
-    <div id="galleryLoader" class="text-center py-10 text-primary/50 text-sm tracking-widest">Loading more...</div>
-  </section>
-
-  <!-- 10. Contact (Expanded Form) -->
+  <!-- 9. GET IN TOUCH (moved above EPIC Pulse) -->
   <section class="py-20 md:py-32 bg-surface-container-lowest border-t border-white/5 relative overflow-hidden" id="contact-section">
     <div class="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-12">
       <div class="reveal">
@@ -385,7 +421,7 @@
             <input class="w-full bg-transparent border-b border-white/20 py-3 focus:border-primary outline-none text-white placeholder-neutral-500" type="tel" placeholder="Phone Number">
           </div>
           <div>
-            <select class="w-full bg-transparent border-b border-white/20 py-3 focus:border-primary outline-none text-white placeholder-neutral-500">
+            <select class="w-full bg-transparent border-b border-white/20 py-3 focus:border-primary outline-none text-white">
               <option value="" disabled selected>Event Type (Select)</option>
               <option>Corporate Event</option>
               <option>Wedding</option>
@@ -399,14 +435,8 @@
             </select>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="text-xs text-neutral-400 block mb-1">Event Start Date</label>
-              <input type="date" class="w-full bg-transparent border-b border-white/20 py-3 focus:border-primary outline-none text-white">
-            </div>
-            <div>
-              <label class="text-xs text-neutral-400 block mb-1">Event End Date</label>
-              <input type="date" class="w-full bg-transparent border-b border-white/20 py-3 focus:border-primary outline-none text-white">
-            </div>
+            <div><label class="text-xs text-neutral-400 block mb-1">Event Start Date</label><input type="date" class="w-full bg-transparent border-b border-white/20 py-3 focus:border-primary outline-none text-white"></div>
+            <div><label class="text-xs text-neutral-400 block mb-1">Event End Date</label><input type="date" class="w-full bg-transparent border-b border-white/20 py-3 focus:border-primary outline-none text-white"></div>
           </div>
           <div>
             <input type="number" min="1" class="w-full bg-transparent border-b border-white/20 py-3 focus:border-primary outline-none text-white placeholder-neutral-500" placeholder="# of models needed">
@@ -419,6 +449,17 @@
       </div>
     </div>
     <div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 -skew-x-12 translate-x-1/2 z-0"></div>
+  </section>
+
+  <!-- 10. THE EPIC PULSE → INFINITE SCROLL VIDEO/IMAGE GALLERY (with lightbox) -->
+  <section class="py-20 md:py-28 bg-black relative overflow-hidden" id="epic-pulse-gallery">
+    <div class="max-w-7xl mx-auto px-4 mb-12 text-center md:text-left">
+      <span class="font-label-caps text-primary tracking-[0.4em]">THE EPIC PULSE</span>
+      <h2 class="font-headline-lg text-white mt-2">Past · Present · <span class="italic font-light">Future</span></h2>
+      <p class="text-neutral-400 max-w-2xl mt-4">A living archive of our talent in motion. Scroll infinitely.</p>
+    </div>
+    <div id="infiniteGallery" class="gallery-grid px-4 md:px-6 max-w-[1600px] mx-auto"></div>
+    <div id="galleryLoader" class="text-center py-10 text-primary/50 text-sm tracking-widest">Loading more...</div>
   </section>
 
   <!-- 11. Final CTA -->
@@ -444,12 +485,15 @@
 
 <script>
   (function(){
-    // ---------- DATA ----------
+    // ---------- DATA (6 models total) ----------
     const modelsData = [
       { name: "Zoe", tagline: "Lifestyle & Brand Ambassador", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", bio: "Zoe is a lifestyle model known for her polished look and strong on-camera presence.", specialties: ["Lifestyle", "Brand Activations"], strengths: ["Approachable","Photogenic"], insta: "@ZoeLizGordon" },
       { name: "Valeria", tagline: "Lifestyle & Swimwear", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Valeria is a swimwear model with confident, high-energy presence.", specialties: ["Swimwear","Dayclubs"], strengths: ["Confident","Engaging"], insta: "@ValeriaPuebela" },
       { name: "Ki", tagline: "Fitness Ambassador", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a175ee05203568fc21.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dbe339e30902466cfe28.mp4", bio: "Ki is a fitness model with athletic look and high energy.", specialties: ["Fitness","Swimwear"], strengths: ["High energy"], insta: "@kithebody" },
-      { name: "Mica", tagline: "Glamour & Lifestyle", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b9063a85455ee7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a181b374defcadedba.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8fcf4f9a4b4c0e67ee.mp4", bio: "Micaela is a glamour model with elegant, high-impact presence.", specialties: ["Glamour","Luxury"], strengths: ["Elegant","Professional"], insta: "@Micaelabaguear" }
+      { name: "Mica", tagline: "Glamour & Lifestyle", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b9063a85455ee7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a181b374defcadedba.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8fcf4f9a4b4c0e67ee.mp4", bio: "Micaela is a glamour model with elegant, high-impact presence.", specialties: ["Glamour","Luxury"], strengths: ["Elegant","Professional"], insta: "@Micaelabaguear" },
+      // Additional two models (duplicate with variation)
+      { name: "Sofia", tagline: "Runway & Editorial", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", bio: "Sofia brings editorial edge and runway confidence to every project.", specialties: ["Editorial","High Fashion"], strengths: ["Striking","Versatile"], insta: "@SofiaRunway" },
+      { name: "Luna", tagline: "Commercial & Print", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Luna's natural charm makes her perfect for commercial and lifestyle campaigns.", specialties: ["Commercial","Print"], strengths: ["Friendly","Reliable"], insta: "@LunaPrint" }
     ];
 
     // Populate Talent Swiper
@@ -515,13 +559,13 @@
 
     // Video modal
     const modal = document.getElementById('videoModal'), modalVid = document.getElementById('modalVideo');
-    document.querySelectorAll('.reel-thumb').forEach(t => t.addEventListener('click', () => { modalVid.src = t.dataset.video; modal.classList.add('active'); modalVid.play(); }));
     document.getElementById('closeVideo').addEventListener('click', () => { modal.classList.remove('active'); modalVid.pause(); modalVid.src=''; });
 
-    // ---------- INFINITE SCROLL GALLERY (The EPIC Pulse) ----------
+    // ---------- INFINITE SCROLL GALLERY with LIGHTBOX ----------
     const galleryContainer = document.getElementById('infiniteGallery');
     const loader = document.getElementById('galleryLoader');
-    // Mixed media items (images + videos)
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
     const mediaPool = [
       { type: 'image', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8ed048139fdead671.jpg' },
       { type: 'video', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4', poster: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png' },
@@ -533,26 +577,28 @@
       { type: 'image', src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDQ50hvjCa2iFoll9FlCd_4KFIpoNBsmufSPGSbwo-jrOEtF7yf0SAUgpEJeV3dqFeJEy3QUANj4aLX5yBzHXPUJytqaktbKzeQQGSy8vB92JtPWV7v8nnVWacoMsRR1-UO1FycYN3XjUI6KalVzvfvljy5QB1jPzizrl8EAmX-SLXrFBf51hG6RmcxmNg9HJAkGcNaZWso6LGYfTUT3B7LgANiM1bKim4UdN7CxLndDQvbsbrFp5Sq3ZBZS9wHKRVVcr9f0rGZOYM' }
     ];
     let currentIndex = 0;
+
     function renderMediaItem(item) {
       const div = document.createElement('div'); div.className = 'gallery-item';
       if (item.type === 'image') {
         div.innerHTML = `<img src="${item.src}" alt="EPIC work" loading="lazy">`;
+        div.addEventListener('click', (e) => {
+          e.stopPropagation();
+          lightboxImg.src = item.src;
+          lightbox.classList.add('active');
+        });
       } else {
         div.innerHTML = `<video src="${item.src}" poster="${item.poster || ''}" muted loop playsinline></video>
                          <span class="video-indicator"><span class="material-symbols-outlined" style="font-size:16px;">play_circle</span> Video</span>`;
         const video = div.querySelector('video');
         div.addEventListener('mouseenter', () => { video.play().catch(()=>{}); });
         div.addEventListener('mouseleave', () => { video.pause(); });
-        // click opens modal
         div.addEventListener('click', (e) => {
           if(e.target.closest('.video-indicator')) return;
           modalVid.src = item.src;
           modal.classList.add('active');
           modalVid.play();
         });
-      }
-      if (item.type === 'image') {
-        div.addEventListener('click', () => { /* could open lightbox, keep simple */ });
       }
       return div;
     }
@@ -565,32 +611,25 @@
       }
     }
 
-    // initial load
     loadMoreItems(8);
-
-    // infinite scroll detection
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        loadMoreItems(6);
-      }
+      if (entries[0].isIntersecting) loadMoreItems(6);
     }, { rootMargin: '200px' });
     if (loader) observer.observe(loader);
 
-    // Back to top button
+    // Back to top
     const backBtn = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 400) backBtn.classList.add('visible');
-      else backBtn.classList.remove('visible');
+      backBtn.classList.toggle('visible', window.scrollY > 400);
       document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 100);
     });
-    backBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
     // Scroll reveals
     gsap.registerPlugin(ScrollTrigger);
     const revealObserver = new IntersectionObserver((e) => e.forEach(en => { if(en.isIntersecting) en.target.classList.add('active'); }), { threshold: 0.1 });
     document.querySelectorAll('.reveal, .reveal-scale, .scroll-reveal-group').forEach(el => revealObserver.observe(el));
 
-    // Smooth anchor
     document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); }));
   })();
 </script>
