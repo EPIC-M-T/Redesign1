@@ -268,11 +268,13 @@
 </div>
 
 <main class="relative">
-  <!-- 1. Fullscreen Cinematic Hero -->
+  <!-- 1. Fullscreen Cinematic Hero with Video Background (no scroll text) -->
   <section class="relative h-screen flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 z-0">
       <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black z-10"></div>
-      <img class="w-full h-full object-cover grayscale-[20%] brightness-75" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnRMhUBo1964jv06a4HycU9Oc7cVSAT0-GN02gF3uCRk0T9xUpj1Bp-NtscOQ5acQwM0rPRaSZPsITVa_GriiApCZToLpjJYTUXTxFYlRJb1Zd7ihVJWQF2m2MWa0Kmcw575UDz3x7a2r_y8h7WLX6aY8BlvpNvISkQkss4plaohCBDlaY4e3Cn8i557d794JYII85hBG_7zvnqaEwRtdalh9mXjYVuP8zHa5sSCfB6RyLR9jCKU3WktLFD6i0ow3P5oycdQHJ6pM" alt="Luxury model"/>
+      <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline>
+        <source src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e98b93a1636a6c6559bc1b.mp4" type="video/mp4">
+      </video>
     </div>
     <div class="relative z-20 w-full max-w-7xl mx-auto px-4 text-center">
       <p class="font-label-caps text-primary tracking-[0.4em] mb-6 animate-pulse">PREMIUM AGENCY</p>
@@ -281,10 +283,6 @@
         <button class="bg-primary text-black px-8 md:px-12 py-4 md:py-5 font-cta uppercase tracking-[0.2em] hover:bg-white transition shadow-xl">Book Talent Now</button>
         <button class="border border-white/30 text-white backdrop-blur-md px-8 md:px-12 py-4 md:py-5 font-cta uppercase tracking-[0.2em] hover:bg-white/10 transition">Explore Portfolio</button>
       </div>
-    </div>
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2">
-      <span class="font-label-caps text-[10px] text-neutral-500 tracking-[0.3em]">SCROLL</span>
-      <div class="w-[1px] h-12 bg-gradient-to-b from-primary/50 to-transparent"></div>
     </div>
   </section>
 
@@ -529,7 +527,7 @@
       },
       { 
         name: "Luna", tagline: "Commercial & Print", 
-        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8eb1e5941575381b99.jpg", // using Valeria's as placeholder since Luna not provided, but you can update later
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8eb1e5941575381b99.jpg", 
         fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", 
         videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", 
         bio: "Luna's natural charm makes her perfect for commercial and lifestyle campaigns.", 
