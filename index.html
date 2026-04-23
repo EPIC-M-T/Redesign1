@@ -237,7 +237,7 @@
 </head>
 <body class="bg-[#050505] text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
 
-<!-- Floating Header with EPIC Logo (slightly enlarged) -->
+<!-- Floating Header with EPIC Logo -->
 <header class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/40 backdrop-blur-2xl transition-all duration-500" id="main-header">
   <div class="nav-inner flex justify-between items-center h-20 px-4 md:px-8 w-full mx-auto transition-all duration-500">
     <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687edb257f24c671f43bb1cb.png" alt="EPIC Models" class="h-10 md:h-12 w-auto object-contain">
@@ -340,7 +340,7 @@
     </div>
   </section>
 
-  <!-- 5. INTERACTIVE ELITE AMBASSADORS (6 models) -->
+  <!-- 5. INTERACTIVE ELITE AMBASSADORS (6 models with updated images) -->
   <section id="talent" class="py-20 md:py-28 px-4 bg-gradient-to-b from-black via-[#0a0c0f] to-black relative z-10">
     <div class="max-w-7xl mx-auto text-center mb-8 md:mb-12">
       <span class="text-primary tracking-widest text-sm font-semibold">THE ROSTER</span>
@@ -398,7 +398,7 @@
     </div>
   </section>
 
-  <!-- 9. GET IN TOUCH (moved above EPIC Pulse) -->
+  <!-- 9. GET IN TOUCH -->
   <section class="py-20 md:py-32 bg-surface-container-lowest border-t border-white/5 relative overflow-hidden" id="contact-section">
     <div class="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-12">
       <div class="reveal">
@@ -451,7 +451,7 @@
     <div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 -skew-x-12 translate-x-1/2 z-0"></div>
   </section>
 
-  <!-- 10. THE EPIC PULSE → INFINITE SCROLL VIDEO/IMAGE GALLERY (with lightbox) -->
+  <!-- 10. THE EPIC PULSE → INFINITE SCROLL GALLERY (with lightbox) -->
   <section class="py-20 md:py-28 bg-black relative overflow-hidden" id="epic-pulse-gallery">
     <div class="max-w-7xl mx-auto px-4 mb-12 text-center md:text-left">
       <span class="font-label-caps text-primary tracking-[0.4em]">THE EPIC PULSE</span>
@@ -485,15 +485,56 @@
 
 <script>
   (function(){
-    // ---------- DATA (6 models total) ----------
+    // ---------- UPDATED MODEL DATA with new headshots ----------
     const modelsData = [
-      { name: "Zoe", tagline: "Lifestyle & Brand Ambassador", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", bio: "Zoe is a lifestyle model known for her polished look and strong on-camera presence.", specialties: ["Lifestyle", "Brand Activations"], strengths: ["Approachable","Photogenic"], insta: "@ZoeLizGordon" },
-      { name: "Valeria", tagline: "Lifestyle & Swimwear", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Valeria is a swimwear model with confident, high-energy presence.", specialties: ["Swimwear","Dayclubs"], strengths: ["Confident","Engaging"], insta: "@ValeriaPuebela" },
-      { name: "Ki", tagline: "Fitness Ambassador", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a175ee05203568fc21.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dbe339e30902466cfe28.mp4", bio: "Ki is a fitness model with athletic look and high energy.", specialties: ["Fitness","Swimwear"], strengths: ["High energy"], insta: "@kithebody" },
-      { name: "Mica", tagline: "Glamour & Lifestyle", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b9063a85455ee7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a181b374defcadedba.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8fcf4f9a4b4c0e67ee.mp4", bio: "Micaela is a glamour model with elegant, high-impact presence.", specialties: ["Glamour","Luxury"], strengths: ["Elegant","Professional"], insta: "@Micaelabaguear" },
-      // Additional two models (duplicate with variation)
-      { name: "Sofia", tagline: "Runway & Editorial", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", bio: "Sofia brings editorial edge and runway confidence to every project.", specialties: ["Editorial","High Fashion"], strengths: ["Striking","Versatile"], insta: "@SofiaRunway" },
-      { name: "Luna", tagline: "Commercial & Print", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Luna's natural charm makes her perfect for commercial and lifestyle campaigns.", specialties: ["Commercial","Print"], strengths: ["Friendly","Reliable"], insta: "@LunaPrint" }
+      { 
+        name: "Zoe", tagline: "Lifestyle & Brand Ambassador", 
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8e38e07b348493e473.jpg", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", 
+        bio: "Zoe is a lifestyle model known for her polished look and strong on-camera presence.", 
+        specialties: ["Lifestyle", "Brand Activations"], strengths: ["Approachable","Photogenic"], insta: "@ZoeLizGordon" 
+      },
+      { 
+        name: "Valeria", tagline: "Lifestyle & Swimwear", 
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8eb1e5941575381b99.jpg", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", 
+        bio: "Valeria is a swimwear model with confident, high-energy presence.", 
+        specialties: ["Swimwear","Dayclubs"], strengths: ["Confident","Engaging"], insta: "@ValeriaPuebela" 
+      },
+      { 
+        name: "Ki", tagline: "Fitness Ambassador", 
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96ae05df4011c2405a9bc.jpg", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a175ee05203568fc21.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dbe339e30902466cfe28.mp4", 
+        bio: "Ki is a fitness model with athletic look and high energy.", 
+        specialties: ["Fitness","Swimwear"], strengths: ["High energy"], insta: "@kithebody" 
+      },
+      { 
+        name: "Mica", tagline: "Glamour & Lifestyle", 
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8e38e07b348493e472.jpg", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a181b374defcadedba.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8fcf4f9a4b4c0e67ee.mp4", 
+        bio: "Micaela is a glamour model with elegant, high-impact presence.", 
+        specialties: ["Glamour","Luxury"], strengths: ["Elegant","Professional"], insta: "@Micaelabaguear" 
+      },
+      { 
+        name: "Julie", tagline: "Runway & Editorial", 
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8e2db6a3cb8281ea13.jpg", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", 
+        bio: "Julie brings editorial edge and runway confidence to every project.", 
+        specialties: ["Editorial","High Fashion"], strengths: ["Striking","Versatile"], insta: "@JulieRunway" 
+      },
+      { 
+        name: "Luna", tagline: "Commercial & Print", 
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8eb1e5941575381b99.jpg", // using Valeria's as placeholder since Luna not provided, but you can update later
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", 
+        bio: "Luna's natural charm makes her perfect for commercial and lifestyle campaigns.", 
+        specialties: ["Commercial","Print"], strengths: ["Friendly","Reliable"], insta: "@LunaPrint" 
+      }
     ];
 
     // Populate Talent Swiper
@@ -505,7 +546,7 @@
     });
     new Swiper('.talentSwiper', { slidesPerView: 1, spaceBetween: 20, loop: true, centeredSlides: true, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, pagination: { el: '.swiper-pagination', clickable: true }, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } });
 
-    // Atmosphere Swiper
+    // Atmosphere Swiper (unchanged)
     const atmosItems = [
       { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuC5QL5tYXEM9xWthrvAqXE6Rm6h4ye-zbFaOhUTsaQOUcAoFlqp1kRpsqkC9YqcRsdTP-2mvLDOexV14iLYyDt-jwhzJ2pAuFYJQL1hKQLm1vIvtc76QZPcGpTw1CrYj2vJpScl-AVAb9zKLQvIFFa317EuXmiUUolnIqfh6ec9hhHFy5Z3sBFXy6OCthH-i1Zzq5A-RWfzDMHk953ycK-mBXCoIp0W8u4GaCRwaaTUWgrXJYgNS6Hwex-dMWIR8DiOtiHP0FQYZvw", title: "The Nightlife", subtitle: "Exclusive VIP Engagements" },
       { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQ50hvjCa2iFoll9FlCd_4KFIpoNBsmufSPGSbwo-jrOEtF7yf0SAUgpEJeV3dqFeJEy3QUANj4aLX5yBzHXPUJytqaktbKzeQQGSy8vB92JtPWV7v8nnVWacoMsRR1-UO1FycYN3XjUI6KalVzvfvljy5QB1jPzizrl8EAmX-SLXrFBf51hG6RmcxmNg9HJAkGcNaZWso6LGYfTUT3B7LgANiM1bKim4UdN7CxLndDQvbsbrFp5Sq3ZBZS9wHKRVVcr9f0rGZOYM", title: "Behind Scenes", subtitle: "Cinematic Production Flow" },
@@ -561,19 +602,19 @@
     const modal = document.getElementById('videoModal'), modalVid = document.getElementById('modalVideo');
     document.getElementById('closeVideo').addEventListener('click', () => { modal.classList.remove('active'); modalVid.pause(); modalVid.src=''; });
 
-    // ---------- INFINITE SCROLL GALLERY with LIGHTBOX ----------
+    // INFINITE SCROLL GALLERY with LIGHTBOX
     const galleryContainer = document.getElementById('infiniteGallery');
     const loader = document.getElementById('galleryLoader');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const mediaPool = [
       { type: 'image', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8ed048139fdead671.jpg' },
-      { type: 'video', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4', poster: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png' },
+      { type: 'video', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4', poster: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8e38e07b348493e473.jpg' },
       { type: 'image', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b9d72f310d1698e56b.jpg' },
-      { type: 'video', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4', poster: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png' },
+      { type: 'video', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4', poster: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8eb1e5941575381b99.jpg' },
       { type: 'image', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8aae4078b3cba111d.jpg' },
       { type: 'image', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b83b3a58c3b91a4d3c.jpg' },
-      { type: 'video', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dbe339e30902466cfe28.mp4', poster: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png' },
+      { type: 'video', src: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dbe339e30902466cfe28.mp4', poster: 'https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96ae05df4011c2405a9bc.jpg' },
       { type: 'image', src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDQ50hvjCa2iFoll9FlCd_4KFIpoNBsmufSPGSbwo-jrOEtF7yf0SAUgpEJeV3dqFeJEy3QUANj4aLX5yBzHXPUJytqaktbKzeQQGSy8vB92JtPWV7v8nnVWacoMsRR1-UO1FycYN3XjUI6KalVzvfvljy5QB1jPzizrl8EAmX-SLXrFBf51hG6RmcxmNg9HJAkGcNaZWso6LGYfTUT3B7LgANiM1bKim4UdN7CxLndDQvbsbrFp5Sq3ZBZS9wHKRVVcr9f0rGZOYM' }
     ];
     let currentIndex = 0;
