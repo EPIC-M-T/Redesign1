@@ -6,7 +6,7 @@
   <title>EPIC Models & Talent | Las Vegas Luxury</title>
   <!-- Tailwind + Plugins -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <!-- Google Fonts (Bebas Neue for target style + Inter & Noto Serif for EPIC branding) -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <!-- GSAP + ScrollTrigger -->
@@ -15,7 +15,7 @@
   <!-- Swiper -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <!-- Anime.js (for possible use in triple reveal) -->
+  <!-- Anime.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   
   <script id="tailwind-config">
@@ -47,7 +47,6 @@
     };
   </script>
   <style>
-    /* Base */
     body {
       margin: 0;
       background-color: #050505;
@@ -56,7 +55,7 @@
       overflow-x: hidden;
     }
 
-    /* Grain overlay (identical to target) */
+    /* Grain overlay (unchanged) */
     .grain-overlay {
       position: fixed;
       inset: 0;
@@ -83,12 +82,11 @@
       }
     }
 
-    /* Mix-blend for nav */
     .mix-blend-difference {
       mix-blend-mode: difference;
     }
 
-    /* Fade-up animation class (will be triggered by GSAP) */
+    /* Fade-up animation class (GSAP will override, but for fallback) */
     .fade-up {
       opacity: 0;
       transform: translateY(30px);
@@ -99,9 +97,13 @@
       transform: translateY(0);
     }
 
-    /* Hero parallax */
     .hero-image {
       will-change: transform;
+    }
+
+    /* Dark text shadow for hero & nav elements */
+    .text-shadow-heavy {
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.6);
     }
 
     /* Triple Reveal & other original EPIC styles (unchanged) */
@@ -397,7 +399,7 @@
       pointer-events: none;
     }
 
-    /* Back to top (minimal) */
+    /* Back to top */
     #backToTop {
       position: fixed;
       bottom: 2rem;
@@ -426,6 +428,18 @@
       background: white;
       color: black;
     }
+
+    /* Hero buttons hover/press effect */
+    .hero-btn {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hero-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    .hero-btn:active {
+      transform: translateY(2px) scale(0.98);
+    }
   </style>
 </head>
 <body class="bg-background text-foreground font-body">
@@ -433,56 +447,58 @@
 
   <!-- EPIC Logo (top left, subtle) -->
   <div class="fixed top-0 left-0 z-50 p-6 md:p-10 hidden md:block">
-    <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687edb257f24c671f43bb1cb.png" alt="EPIC" class="h-8 md:h-10 w-auto mix-blend-difference opacity-80">
+    <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687edb257f24c671f43bb1cb.png" alt="EPIC" class="h-8 md:h-10 w-auto mix-blend-difference opacity-80 text-shadow-heavy">
   </div>
 
   <!-- Mobile Navigation -->
   <div class="fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-start md:hidden">
     <div class="relative">
-      <button id="mobileMenuBtn" class="text-sm text-white mix-blend-difference">Menu</button>
+      <button id="mobileMenuBtn" class="text-sm text-white mix-blend-difference text-shadow-heavy">Menu</button>
       <div id="mobileMenu" class="flex flex-col items-start gap-3 mt-6 transition-all duration-300 opacity-0 -translate-y-4 pointer-events-none">
-        <a href="#about" class="text-sm text-white mix-blend-difference hover:opacity-60">About</a>
-        <a href="#services" class="text-sm text-white mix-blend-difference hover:opacity-60">Expertise</a>
-        <a href="#talent" class="text-sm text-white mix-blend-difference hover:opacity-60">Roster</a>
-        <a href="#gallery" class="text-sm text-white mix-blend-difference hover:opacity-60">Gallery</a>
-        <a href="#contact" class="text-sm text-white mix-blend-difference hover:opacity-60">Contact</a>
+        <a href="#about" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60">About</a>
+        <a href="#services" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60">Expertise</a>
+        <a href="#talent" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60">Roster</a>
+        <a href="#gallery" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60">Gallery</a>
+        <a href="#contact" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60">Contact</a>
       </div>
     </div>
     <div class="flex items-center gap-4">
-      <a href="mailto:booking@epicmodelsandtalent.com" class="text-sm text-white mix-blend-difference hover:opacity-60">Mail</a>
-      <a href="#" class="text-sm text-white mix-blend-difference hover:opacity-60">Instagram</a>
-      <a href="#" class="text-sm text-white mix-blend-difference hover:opacity-60">LinkedIn</a>
+      <a href="mailto:booking@epicmodelsandtalent.com" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60">Mail</a>
+      <a href="#" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60">Instagram</a>
+      <a href="#" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60">LinkedIn</a>
     </div>
   </div>
 
   <!-- Desktop top-right links -->
   <div class="hidden md:block fixed top-0 right-0 z-50 p-6 md:p-10">
     <div class="flex items-center gap-6 justify-end">
-      <a href="mailto:booking@epicmodelsandtalent.com" class="text-sm text-white mix-blend-difference hover:opacity-60 transition-opacity">Mail</a>
-      <a href="#" class="text-sm text-white mix-blend-difference hover:opacity-60 transition-opacity">Instagram</a>
-      <a href="#" class="text-sm text-white mix-blend-difference hover:opacity-60 transition-opacity">LinkedIn</a>
+      <a href="mailto:booking@epicmodelsandtalent.com" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60 transition-opacity">Mail</a>
+      <a href="#" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60 transition-opacity">Instagram</a>
+      <a href="#" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60 transition-opacity">LinkedIn</a>
     </div>
   </div>
 
   <!-- Desktop bottom-right vertical nav -->
   <nav class="hidden md:block fixed bottom-0 right-0 z-50 p-6 md:p-10 transition-all duration-500 opacity-100 translate-x-0">
     <div class="flex flex-col items-end gap-3">
-      <a href="#about" class="text-sm text-white mix-blend-difference hover:opacity-60 transition-all relative py-1 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-white">About</a>
-      <a href="#services" class="text-sm text-white mix-blend-difference hover:opacity-60 transition-all relative py-1">Expertise</a>
-      <a href="#talent" class="text-sm text-white mix-blend-difference hover:opacity-60 transition-all relative py-1">Roster</a>
-      <a href="#gallery" class="text-sm text-white mix-blend-difference hover:opacity-60 transition-all relative py-1">Gallery</a>
-      <a href="#contact" class="text-sm text-white mix-blend-difference hover:opacity-60 transition-all relative py-1">Contact</a>
+      <a href="#about" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60 transition-all relative py-1 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-white">About</a>
+      <a href="#services" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60 transition-all relative py-1">Expertise</a>
+      <a href="#talent" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60 transition-all relative py-1">Roster</a>
+      <a href="#gallery" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60 transition-all relative py-1">Gallery</a>
+      <a href="#contact" class="text-sm text-white mix-blend-difference text-shadow-heavy hover:opacity-60 transition-all relative py-1">Contact</a>
     </div>
   </nav>
 
   <main>
-    <!-- HERO SECTION (target style with EPIC image + parallax) -->
+    <!-- ===== HERO SECTION (updated with new GIFs, shadow, slide-in) ===== -->
     <section id="hero" class="relative h-screen w-full overflow-hidden">
       <div class="absolute inset-0 w-full h-full hero-image">
+        <!-- Desktop hero GIF -->
         <img src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/6a10c635a33d272edac71d86.gif" 
              alt="EPIC Models" 
              class="hidden md:block w-full h-full object-cover object-center">
-        <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69ea5b659fe87a9994678728.jpg" 
+        <!-- Mobile hero GIF -->
+        <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6a10d64be05851175c4a765c.gif" 
              alt="EPIC Models" 
              class="md:hidden w-full h-full object-cover object-center">
         <div class="absolute inset-0 bg-black/40 md:bg-black/30"></div>
@@ -490,22 +506,24 @@
       <div class="relative z-10 h-full flex items-end md:items-center pb-32 md:pb-0 px-4 sm:px-6 md:px-12 lg:px-16">
         <div class="w-full max-w-5xl">
           <h1 class="font-display leading-none tracking-tighter text-[15vw] sm:text-[12vw] md:text-hero">
-            <span class="block text-white">EPIC</span>
-            <span class="block text-white">MODELS</span>
-            <span class="block text-white">&amp; TALENT</span>
+            <!-- Each line will be animated separately (slide in from left) -->
+            <span class="block text-white text-shadow-heavy hero-line">EPIC</span>
+            <span class="block text-white text-shadow-heavy hero-line">MODELS</span>
+            <span class="block text-white text-shadow-heavy hero-line">&amp; TALENT</span>
           </h1>
-          <p class="mt-6 md:mt-8 text-sm sm:text-base text-white/80 max-w-sm md:max-w-md leading-relaxed [text-shadow:0_2px_12px_rgba(0,0,0,0.8)]">
-  Premium Las Vegas talent, polished presentation, and cinematic brand energy for campaigns, events, and unforgettable visual moments.
+          <p class="mt-6 md:mt-8 text-sm sm:text-base text-white max-w-sm md:max-w-md leading-relaxed text-shadow-heavy hero-line">
+            Premium Las Vegas talent, polished presentation, and cinematic brand energy for campaigns, events, and unforgettable visual moments.
           </p>
+          <!-- Hero buttons (mobile only as per original design) -->
           <div class="mt-8 flex gap-4 md:hidden">
-            <a href="#contact" class="px-6 py-3 bg-white text-black rounded-full text-sm font-medium">BOOK THE FINEST</a>
-            <a href="#talent" class="px-6 py-3 border border-white/30 text-white rounded-full text-sm font-medium">LAS VEGAS TALENT</a>
+            <a href="#contact" class="hero-btn px-6 py-3 bg-white text-black rounded-full text-sm font-medium text-center inline-block w-full sm:w-auto">BOOK THE FINEST</a>
+            <a href="#talent" class="hero-btn px-6 py-3 border border-white/30 text-white rounded-full text-sm font-medium text-center inline-block w-full sm:w-auto">LAS VEGAS TALENT</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT SECTION -->
+    <!-- ===== ABOUT SECTION (unchanged) ===== -->
     <section id="about" class="section-padding">
       <div class="max-w-7xl mx-auto">
         <div class="mb-16 fade-up">
@@ -544,7 +562,7 @@
       </div>
     </section>
 
-    <!-- SERVICES / EXPERTISE (target's "Skills" section) -->
+    <!-- ===== SERVICES / EXPERTISE ===== -->
     <section id="services" class="section-padding bg-[#0d0d0d]">
       <div class="max-w-7xl mx-auto">
         <div class="mb-16 fade-up">
@@ -565,7 +583,7 @@
       </div>
     </section>
 
-    <!-- TALENT ROSTER -->
+    <!-- ===== TALENT ROSTER (unchanged) ===== -->
     <section id="talent" class="section-padding">
       <div class="max-w-7xl mx-auto">
         <div class="mb-16 fade-up">
@@ -582,7 +600,7 @@
       </div>
     </section>
 
-    <!-- ATMOSPHERE / LIFESTYLE CAROUSEL -->
+    <!-- ===== ATMOSPHERE / LIFESTYLE CAROUSEL ===== -->
     <section id="atmosphere" class="section-padding bg-[#0d0d0d]">
       <div class="max-w-7xl mx-auto">
         <div class="mb-16 fade-up">
@@ -596,7 +614,7 @@
       </div>
     </section>
 
-    <!-- INFINITE GALLERY -->
+    <!-- ===== INFINITE GALLERY ===== -->
     <section id="gallery" class="section-padding">
       <div class="max-w-7xl mx-auto">
         <div class="mb-16 fade-up">
@@ -609,7 +627,7 @@
       </div>
     </section>
 
-    <!-- WHY EPIC -->
+    <!-- ===== WHY EPIC ===== -->
     <section id="why-epic" class="section-padding bg-[#0d0d0d]">
       <div class="max-w-7xl mx-auto">
         <div class="mb-16 fade-up">
@@ -634,7 +652,7 @@
       </div>
     </section>
 
-    <!-- CONTACT SECTION -->
+    <!-- ===== CONTACT SECTION ===== -->
     <section id="contact" class="section-padding">
       <div class="max-w-7xl mx-auto">
         <div class="mb-16 fade-up">
@@ -696,7 +714,7 @@
     </section>
   </main>
 
-  <!-- Triple Reveal Overlay (unchanged from original) -->
+  <!-- Triple Reveal Overlay -->
   <div class="reveal-wrapper" id="revealWrapper"><div id="dynamicTripleScene"></div></div>
   <div class="triple-overlay" id="tripleOverlay"></div>
 
@@ -714,14 +732,14 @@
     <img id="lightbox-img" src="" alt="Expanded view">
   </div>
 
-  <!-- Back to Top Button -->
+  <!-- Back to Top -->
   <div id="backToTop" class="material-symbols-outlined">arrow_upward</div>
 
   <script>
     (function() {
       gsap.registerPlugin(ScrollTrigger);
 
-      // Hero parallax
+      // Hero parallax (unchanged)
       gsap.to(".hero-image", {
         scale: 1.1,
         ease: "none",
@@ -733,7 +751,19 @@
         },
       });
 
-      // Fade-up animations
+      // Slide-in animation for hero text (each .hero-line)
+      gsap.fromTo(".hero-line", 
+        { opacity: 0, x: -60 },
+        {
+          opacity: 1, x: 0,
+          duration: 1,
+          ease: "power3.out",
+          stagger: 0.2,
+          delay: 0.5,
+        }
+      );
+
+      // Fade-up animations for other sections
       const fadeUps = document.querySelectorAll(".fade-up");
       fadeUps.forEach(el => {
         gsap.fromTo(el, 
@@ -751,16 +781,14 @@
         );
       });
 
-      // Back to top button
+      // Back to top
       const backBtn = document.getElementById('backToTop');
       window.addEventListener('scroll', () => {
         backBtn.classList.toggle('visible', window.scrollY > 400);
       });
       backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-      // ---- ORIGINAL EPIC DATA & INTERACTIVE COMPONENTS ----
-
-      // Models data (unchanged)
+      // ---- ORIGINAL EPIC DATA & INTERACTIVE COMPONENTS (unchanged) ----
       const modelsData = [
         { name: "Zoe", tagline: "Lifestyle & Brand Ambassador", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8e38e07b348493e473.jpg", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", bio: "Zoe is a lifestyle model known for her polished look and strong on-camera presence.", specialties: ["Lifestyle", "Brand Activations"], strengths: ["Approachable","Photogenic"], insta: "@ZoeLizGordon" },
         { name: "Valeria", tagline: "Lifestyle & Swimwear", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8eb1e5941575381b99.jpg", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Valeria is a swimwear model with confident, high-energy presence.", specialties: ["Swimwear","Dayclubs"], strengths: ["Confident","Engaging"], insta: "@ValeriaPuebela" },
@@ -770,7 +798,6 @@
         { name: "Luna", tagline: "Commercial & Print", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69e96a8eb1e5941575381b99.jpg", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Luna's natural charm makes her perfect for commercial and lifestyle campaigns.", specialties: ["Commercial","Print"], strengths: ["Friendly","Reliable"], insta: "@LunaPrint" }
       ];
 
-      // Talent Swiper
       const talentWrapper = document.getElementById('talentSwiperWrapper');
       modelsData.forEach((m,i) => {
         const slide = document.createElement('div'); slide.className = 'swiper-slide';
@@ -784,7 +811,6 @@
         breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
       });
 
-      // Atmosphere Swiper
       const atmosItems = [
         { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuC5QL5tYXEM9xWthrvAqXE6Rm6h4ye-zbFaOhUTsaQOUcAoFlqp1kRpsqkC9YqcRsdTP-2mvLDOexV14iLYyDt-jwhzJ2pAuFYJQL1hKQLm1vIvtc76QZPcGpTw1CrYj2vJpScl-AVAb9zKLQvIFFa317EuXmiUUolnIqfh6ec9hhHFy5Z3sBFXy6OCthH-i1Zzq5A-RWfzDMHk953ycK-mBXCoIp0W8u4GaCRwaaTUWgrXJYgNS6Hwex-dMWIR8DiOtiHP0FQYZvw", title: "The Nightlife", subtitle: "Exclusive VIP Engagements" },
         { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQ50hvjCa2iFoll9FlCd_4KFIpoNBsmufSPGSbwo-jrOEtF7yf0SAUgpEJeV3dqFeJEy3QUANj4aLX5yBzHXPUJytqaktbKzeQQGSy8vB92JtPWV7v8nnVWacoMsRR1-UO1FycYN3XjUI6KalVzvfvljy5QB1jPzizrl8EAmX-SLXrFBf51hG6RmcxmNg9HJAkGcNaZWso6LGYfTUT3B7LgANiM1bKim4UdN7CxLndDQvbsbrFp5Sq3ZBZS9wHKRVVcr9f0rGZOYM", title: "Behind Scenes", subtitle: "Cinematic Production Flow" },
@@ -836,7 +862,7 @@
       const modal = document.getElementById('videoModal'), modalVid = document.getElementById('modalVideo');
       document.getElementById('closeVideo').addEventListener('click', () => { modal.classList.remove('active'); modalVid.pause(); modalVid.src=''; });
 
-      // Infinite gallery (unchanged)
+      // Infinite gallery
       const galleryContainer = document.getElementById('infiniteGallery');
       const loader = document.getElementById('galleryLoader');
       const lightbox = document.getElementById('lightbox');
